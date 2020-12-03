@@ -2733,6 +2733,7 @@ initialize_readline()
 int
 interpret(INSTRUCTION *pc)
 {
+  YAnchor yanchor(__PRETTY_FUNCTION__, "");
 	char *run;
 
 	input_fd = fileno(stdin);
