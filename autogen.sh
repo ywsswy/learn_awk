@@ -20,7 +20,8 @@ if ! type $AUTORECONF >/dev/null 2>&1; then
 fi
 
 test ! -d "$srcdir/m4" &&  mkdir "$srcdir/m4"
-$AUTORECONF -v --install || exit $?
+$AUTORECONF -v || exit $?
+#$AUTORECONF -v --install || exit $?
 cd "$ORIGDIR" || exit $?
 
 

@@ -1,3 +1,12 @@
 *.o
+*.sw?
 .gdb_history
 autom4te.cache
+Makefile
+Makefile.in
+gawk
+stamp-h1
+.deps
+config.h
+config.status
+*.log
