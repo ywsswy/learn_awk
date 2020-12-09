@@ -355,6 +355,7 @@ AC_C_CONST
 AC_C_RESTRICT
 AC_C_INLINE
 AC_C_STRINGIZE
+AC_PROG_CXX
 
 AC_CONFIG_HEADERS([config.h:configh.in])
 AH_BOTTOM([#include "custom.h"])

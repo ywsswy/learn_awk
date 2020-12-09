@@ -113,6 +113,7 @@ base_sources = \
 	regex.h \
 	replace.c \
 	version.c \
+	ylog_wrapper.cc \
 	xalloc.h
 
 gawk_SOURCES = $(base_sources) eval.c profile.c
