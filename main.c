@@ -26,7 +26,6 @@
 /* FIX THIS BEFORE EVERY RELEASE: */
 #define UPDATE_YEAR	2012
 
-#include "ylog.h"
 #include "awk.h"
 #include "getopt.h"
 
@@ -207,24 +206,6 @@ static const struct option optab[] = {
 #define do_lint_old 0
 #endif
 
-class YAnchor
-{
-public:
-    static YLog log; 
-    YAnchor(const std::string &sign, const std::string &info) : sign(sign), info(info)
-    {
-        log.W(__FILE__, __LINE__, YLog::INFO, sign + "@1", info);
-    }
-    ~YAnchor()
-    {
-        log.W(__FILE__, __LINE__, YLog::INFO, sign + "@2", info);
-    }   
-private:
-    std::string sign;
-    std::string info;
-};
-YLog YAnchor::log(YLog::DEBUG, "anchor_log.txt", YLog::OVER);
-
 /* main --- process args, parse program, run it, clean up */
 
 int
@@ -235,7 +216,6 @@ main(int argc, char **argv)
 	 * Note: reserve -D for future use, to merge dgawk into gawk.
 	 * Note: reserve -l for future use, for xgawk's -l option.
 	 */
-  YAnchor yanchor(__PRETTY_FUNCTION__, "");
 	const char *optlist = "+F:f:v:W;m:bcCd::e:E:gh:L:nNOp::PrR:StVY";
 	int stopped_early = FALSE;
 	int old_optind;
