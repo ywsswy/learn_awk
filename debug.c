@@ -23,6 +23,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
+#include "ylog_wrapper.h"
+extern struct YLogWrapper *g_anchor;
 #include "awk.h"
 #include "cmd.h"
 
@@ -2730,9 +2732,12 @@ initialize_readline()
 
 /* interpret --- debugger entry point */
 
+#define return strcpy(ylog_str, __FILE__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 int
 interpret(INSTRUCTION *pc)
 {
+    char ylog_str[200] = __FILE__;
+    g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	char *run;
 
 	input_fd = fileno(stdin);
@@ -2810,6 +2815,7 @@ interpret(INSTRUCTION *pc)
 	read_command();	/* yyparse */
 	return EXIT_SUCCESS;
 }
+#undef return
 
 
 /* N.B.: ignore breakpoints and watchpoints for return command */

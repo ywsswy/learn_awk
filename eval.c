@@ -23,6 +23,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
  */
 
+#include "ylog_wrapper.h"
+extern struct YLogWrapper *g_anchor;
 #include "awk.h"
 
 extern void after_beginfile(IOBUF **curfile);
@@ -1672,9 +1674,12 @@ pop_exec_state(int *rule, char **src, long *sz)
  */
 
 
+#define return strcpy(ylog_str, __FILE__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 int
 r_interpret(INSTRUCTION *code)
 {
+    char ylog_str[200] = __FILE__;
+    g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	INSTRUCTION *pc;   /* current instruction */
 	NODE *r = NULL;
 	NODE *m;
@@ -2796,3 +2801,4 @@ func_call:
 #undef mk_sub
 #undef JUMPTO
 }
+#undef return
