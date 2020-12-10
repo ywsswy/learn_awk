@@ -1,4 +1,17 @@
-  Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012
+# add by yws
+```
+./autogen.sh
+./configure CFLAGS="-g -O0"
+make V=1
+
+
+cat test.txt |./gawk -v FS="\x09" -v OFS="_" '{$1=$1;printf("%s\n", $0)}'
+a	b		c
+1 2  3   4
+1	2		3
+```
+
+Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012
   Free Software Foundation, Inc.
   
   Copying and distribution of this file, with or without modification,

@@ -24,6 +24,7 @@
  */
 
 /* FIX THIS BEFORE EVERY RELEASE: */
+#include "ylog_wrapper.h"
 #define UPDATE_YEAR	2012
 
 #include "awk.h"
@@ -207,10 +208,17 @@ static const struct option optab[] = {
 #endif
 
 /* main --- process args, parse program, run it, clean up */
+struct YLogWrapper *g_anchor;
+struct YLogWrapper *ylog1;
 
+#define return ; return
 int
 main(int argc, char **argv)
 {
+    g_anchor = NewYLog(0, "anchor_log.txt", 1);
+    ylog1 = NewYLog(0, "test.log", 0);
+    char ylog_str[200] = __FILE__;
+    g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	/*
 	 * The + on the front tells GNU getopt not to rearrange argv.
 	 * Note: reserve -D for future use, to merge dgawk into gawk.
@@ -351,6 +359,7 @@ main(int argc, char **argv)
 			break;
 
 		case 'v':
+            ylog1->W(ylog1, __FILE__, __LINE__, 0, "add_preassign", optarg);
 			add_preassign(PRE_ASSIGN, optarg);
 			break;
 
@@ -700,7 +709,16 @@ out:
 
 	exit(exit_val);		/* more portable */
 	return exit_val;	/* to suppress warnings */
+/*
+    {
+        char ylog_str[200] = "";
+        strcpy(str, __FILE__);
+        strcat(str, "@2");
+        g_anchor->W(g_anchor, __FILE__, __LINE__, 1, ylog_str, "");
+    }
+*/
 }
+#undef return
 
 /* add_preassign --- add one element to preassigns */
 
