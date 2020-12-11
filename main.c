@@ -211,13 +211,13 @@ static const struct option optab[] = {
 
 /* main --- process args, parse program, run it, clean up */
 
-#define return strcpy(ylog_str, __FILE__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
+
+#define return strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 int
 main(int argc, char **argv)
 {
     g_anchor = NewYLog(0, "anchor_log.txt", 1);
-    char ylog_str[200] = __FILE__;
-    g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
+    char ylog_str[200]; strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
     ylog1 = NewYLog(0, "test.log", 0);
 	/*
 	 * The + on the front tells GNU getopt not to rearrange argv.

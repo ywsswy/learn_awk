@@ -1,3 +1,5 @@
+#include "ylog_wrapper.h"
+extern struct YLogWrapper *g_anchor;
 /*
  * builtin.c - Builtin functions and various utility procedures.
  */
@@ -568,6 +570,7 @@ do_log(int nargs)
  * for taming this beast and making it compatible with ANSI C.
  */
 
+#define return strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 NODE *
 format_tree(
 	const char *fmt_string,
@@ -575,6 +578,7 @@ format_tree(
 	NODE **the_args,
 	long num_args)
 {
+    char ylog_str[200]; strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 /* copy 'l' bytes from 's' to 'obufout' checking for space in the process */
 /* difference of pointers should be of ptrdiff_t type, but let us be kind */
 #define bchunk(s, l) if (l) { \
@@ -1382,13 +1386,16 @@ out:
 		gawk_exit(EXIT_FATAL);
 	return r;
 }
+#undef return
 
 
 /* printf_common --- common code for sprintf and printf */
 
+#define return strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 static NODE *
 printf_common(int nargs)
 {
+    char ylog_str[200]; strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	int i;
 	NODE *r, *tmp;
 
@@ -1411,6 +1418,7 @@ printf_common(int nargs)
 		DEREF(args_array[i]);
 	return r;
 }
+#undef return
 
 /* do_sprintf --- perform sprintf */
 
@@ -1427,9 +1435,11 @@ do_sprintf(int nargs)
 
 /* do_printf --- perform printf, including redirection */
 
+#define return strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 void
 do_printf(int nargs, int redirtype)
 {
+    char ylog_str[200]; strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	FILE *fp = NULL;
 	NODE *tmp;
 	struct redirect *rp = NULL;
@@ -1477,9 +1487,12 @@ do_printf(int nargs, int redirtype)
 		if (rp != NULL && (rp->flag & RED_TWOWAY) != 0)
 			fflush(rp->fp);
 		DEREF(tmp);
-	} else
+	} else {
 		gawk_exit(EXIT_FATAL);
+    }
+    return;
 }
+#undef return
 
 /* do_sqrt --- do the sqrt function */
 

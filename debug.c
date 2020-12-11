@@ -1,3 +1,5 @@
+#include "ylog_wrapper.h"
+extern struct YLogWrapper *g_anchor;
 /*
  * debug.c - gawk debugger 
  */
@@ -23,8 +25,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
-#include "ylog_wrapper.h"
-extern struct YLogWrapper *g_anchor;
 #include "awk.h"
 #include "cmd.h"
 

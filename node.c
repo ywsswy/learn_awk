@@ -1,3 +1,5 @@
+#include "ylog_wrapper.h"
+extern struct YLogWrapper *g_anchor;
 /*
  * node.c -- routines for node management
  */
@@ -260,15 +262,18 @@ no_malloc:
 
 /* force_string --- force a value to be a string */
 
+#define return strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@2"), ""); return
 NODE *
 r_force_string(NODE *s)
 {
+    char ylog_str[200]; strcpy(ylog_str, __FUNCTION__); g_anchor->W(g_anchor, __FILE__, __LINE__, 1, strcat(ylog_str, "@1"), "");
 	if ((s->flags & STRCUR) != 0
 		    && (s->stfmt == -1 || s->stfmt == CONVFMTidx)
 	)
 		return s;
 	return format_val(CONVFMT, CONVFMTidx, s);
 }
+#undef return
 
 /* dupnode --- duplicate a node */
 
